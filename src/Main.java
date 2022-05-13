@@ -114,9 +114,7 @@ public class Main {
         tens[(num % 100) / 10] +
         units[num % 10];
         }
-
 }
-
 
 
 
