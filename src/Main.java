@@ -3,27 +3,31 @@ import java.util.Scanner;
 import java.util.HashMap;
 
 public class Main {
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws Exception {
         Scanner input = new Scanner(System.in);
         System.out.printf(calc(input.nextLine()));
         input.close();
     }
-    public static String calc(String input){
-
-
-
-        String[] inputArr = input.split(" ");
+    public static String calc(String inputString) throws Exception {
+        String[] inputArr = inputString.split(" ");
         String operandOne = inputArr[0];
         String operation = inputArr[1];
         String operandTwo = inputArr[2];
         String output;
+        String romansValidation = "^(?=[MDCLXVI])M*(C[MD]|D?C{0,3})(X[CL]|L?X{0,3})(I[XV]|V?I{0,3})$";
 
-        if(inputArr.length > 3){
-            output = "Ошибка: Суммировать можно только 2 числа";
-        } else {
 
-        if(operandOne.matches("^(?=[MDCLXVI])M*(C[MD]|D?C{0,3})(X[CL]|L?X{0,3})(I[XV]|V?I{0,3})$") && operandTwo.matches("^(?=[MDCLXVI])M*(C[MD]|D?C{0,3})(X[CL]|L?X{0,3})(I[XV]|V?I{0,3})$")){
+        if(inputArr.length > 3) throw new Exception("Калькулятор должен выбрасывать исключение если выражение содержит более двух чисел");
+
+
+
+        else {
+
+
+        if(operandOne.matches(romansValidation) && operandTwo.matches(romansValidation)){
+            if(romanToInt(operandOne) == 0 || romanToInt(operandTwo) == 0) throw new Exception("Калькулятор должен выбрасывать исключение если выражение содержит более двух чисел");
+
+
             if (romanToInt(operandOne) >= 0 && 10 >= romanToInt(operandOne) && romanToInt(operandTwo) >= 0 && 10 >= romanToInt(operandTwo)) {
                 switch (operation) {
                     case ("+"):
@@ -40,8 +44,8 @@ public class Main {
                         break;
 
                     default:
-                        output = "Неверная операция";
-                        break;
+                        throw new Exception("Калькулятор должен выбрасывать исключение если выражение содержит более двух чисел");
+
                 }
 
             }
@@ -52,6 +56,8 @@ public class Main {
         }
 
        else  if (Integer.valueOf(operandOne) >= 0 && 10 >= Integer.valueOf(operandOne) && Integer.valueOf(operandTwo) >= 0 && 10 >= Integer.valueOf(operandTwo)) {
+            if(Integer.valueOf(operandOne) == 0 || Integer.valueOf(operandTwo) == 0) throw new Exception("Калькулятор должен выбрасывать исключение если выражение содержит более двух чисел");
+
             switch (operation) {
                 case ("+"):
                     output = String.valueOf(Integer.valueOf(operandOne) + Integer.valueOf(operandTwo));
@@ -67,13 +73,13 @@ public class Main {
                     break;
 
                 default:
-                    output = "Неверная операция";
-                    break;
+                    throw new Exception("Калькулятор должен выбрасывать исключение если выражение содержит более двух чисел");
+
             }
 
         }
         else{
-            output = "Ошибка: Невалидные числа";
+            throw new Exception("Калькулятор должен выбрасывать исключение если выражение содержит более двух чисел");
         }
 
         }
@@ -116,7 +122,4 @@ public class Main {
         }
 
 }
-
-
-
 
